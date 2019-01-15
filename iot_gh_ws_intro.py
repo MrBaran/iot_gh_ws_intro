@@ -6,7 +6,7 @@ TOKEN = "your token here"
 last_id = None
 
 ghs = IoTGreenhouseService()
-ts = GHTextingService(ACCESS_TOKEN, ghs)
+ts = GHTextingService(TOKEN, ghs)
 
 while True:
     lm = ts.last_message
