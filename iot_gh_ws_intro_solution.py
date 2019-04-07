@@ -2,7 +2,7 @@ from time import sleep
 import requests
 
 BASE_URL = "https://api.groupme.com/v3"
-TOKEN = "c1VEiaMw8KmlktkGwiW9gE9GeRJtfi4BWCStBXCp "
+TOKEN = "paste your developer access token here"
 
 print("GroupMe test application demonstrating REST API.\n")
 
@@ -39,6 +39,7 @@ else:
     member_id = r.json()["response"]["results_id"]
 
 #add bot
+print("Creating bot.")
 bot_id = None
 params = {"token": TOKEN}
 payload = {"bot": {"name": "ghBot", "group_id": group_id}} 
@@ -53,22 +54,25 @@ else:
     bot_id = bot["bot_id"]
 
 #send message
+print("Sending message.")
 message = input("What message would you like to send: ")
-params = {"token": self._access_token}
+params = {"token": TOKEN}
 payload = {"bot_id": bot_id, "text": message}
 headers = {"content-type": "application/json"}
 end_point = "/bots/post"
-url = "%s%s" % (self.BASE_URL, end_point)
+url = "%s%s" % (BASE_URL, end_point)
 r = requests.post(url, json=payload, headers=headers, params=params)
 if r.status_code != 202:
     raise Exception("Unable to post message. " + r.text)
 
 input("Press Enter to delete the GroupMe group and quit.")
 #delete group
-params = {"token": self._access_token}
+params = {"token": TOKEN}
 headers = {"content-type": "application/json"}
 end_point = "/groups/%s/destroy" % group_id
-url = "%s%s" % (self.BASE_URL, end_point)
+url = "%s%s" % (BASE_URL, end_point)
 r = requests.post(url, headers=headers, params=params)
 if r.status_code != 200:
     raise Exception("Bad request. Unable to remove group. Please verify your access token." + r.text)
+
+print("GroupMe group is deleted. App is closing.")
